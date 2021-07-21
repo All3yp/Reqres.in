@@ -9,6 +9,8 @@ import UIKit
 
 class UsersView: UIView {
 
+    weak var delegate: PaginationUserViewDelegate?
+
     var usersResult: RequestModel? {
         didSet {
             DispatchQueue.main.async {
@@ -39,6 +41,11 @@ class UsersView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // Delegate
+    func pagination(page: Int) -> Int {
+        return usersResult!.page
     }
 
     // MARK: - Setup Contraints
@@ -84,6 +91,19 @@ extension UsersView: UITableViewDelegate, UITableViewDataSource {
 
 
         return cell
+    }
+
+}
+
+extension UsersView: UIScrollViewDelegate {
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
+
+            guard let pagination = usersResult?.page else { return }
+            delegate?.pagination(page: pagination+1)
+        }
     }
 
 }

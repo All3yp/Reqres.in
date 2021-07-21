@@ -69,8 +69,6 @@ class UsersTableViewCell: UITableViewCell {
             emailLabel.trailingAnchor.constraint(equalTo: userImageView.trailingAnchor),
             emailLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).priority(.defaultLow)
         ])
-
-
     }
 
 }

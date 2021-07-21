@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, PaginationUserViewDelegate {
 
     let serviceManager = ServiceManager()
 
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = userView
+        userView.delegate = self
     }
 
     override func viewDidLoad() {
@@ -30,22 +31,38 @@ class ViewController: UIViewController {
 
     }
 
-
     // MARK: - Request
-    func fetchRequest() {
-        let urlRequest = URLRequest.init(url: serviceManager.baseURl!)
+    func fetchRequest(page: Int = 1) {
+
+        let urlRequest = URLRequest(url: serviceManager.getUsers(page: page))
 
         serviceManager.request(urlRequest, decodeType: RequestModel.self) { result in
             switch result {
             case .success(let model):
-//                model?.data.forEach({ user in
-//                    print("\n\(user.id)")
-//                    print(user.email)
-//                    print(user.first_name)
-//                    print(user.last_name)
-//                    print(user.avatar)
-//                })
-                self.userView.usersResult = model // passando o valor da requisicao pra view
+                //                model?.data.forEach({ user in
+                //                    print("\n\(user.id)")
+                //                    print(user.email)
+                //                    print(user.first_name)
+                //                    print(user.last_name)
+                //                    print(user.avatar)
+                //                })
+
+                guard let model = model else { return }
+
+                if let usersResult = self.userView.usersResult {
+                    print("👺",model.page)
+
+                    guard !model.data.isEmpty else { return } // caso nao tenha mais nada a ser paginado
+
+                    let newModel = RequestModel(
+                        page: model.page,
+                        data: usersResult.data + model.data
+                    )
+                    self.userView.usersResult = newModel
+
+                } else {
+                    self.userView.usersResult = model // passando o valor da requisicao pra view
+                }
 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -53,5 +70,8 @@ class ViewController: UIViewController {
         }
     }
 
-}
+    func pagination(page: Int) {
+        fetchRequest(page: page)
+    }
 
+}

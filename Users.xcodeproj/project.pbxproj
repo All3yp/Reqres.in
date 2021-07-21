@@ -16,6 +16,7 @@
 		18C28C3B26A271A800DCF34D /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C3A26A271A800DCF34D /* RequestManager.swift */; };
 		18C28C4126A293E800DCF34D /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C4026A293E800DCF34D /* UsersView.swift */; };
 		18C28C4326A366C300DCF34D /* UsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C4226A366C300DCF34D /* UsersTableViewCell.swift */; };
+		18E6D57826A89B1D00B81FF0 /* PaginationUserViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6D57726A89B1D00B81FF0 /* PaginationUserViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		18C28C3A26A271A800DCF34D /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		18C28C4026A293E800DCF34D /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		18C28C4226A366C300DCF34D /* UsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
+		18E6D57726A89B1D00B81FF0 /* PaginationUserViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationUserViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		18C28C2226A268D000DCF34D /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				18E6D57726A89B1D00B81FF0 /* PaginationUserViewDelegate.swift */,
 				18C28C3D26A2935D00DCF34D /* Resource */,
 				18C28C3F26A293A600DCF34D /* Controllers */,
 				18C28C3C26A271AB00DCF34D /* Networking */,
@@ -189,6 +192,7 @@
 				18C28C2826A268D000DCF34D /* ViewController.swift in Sources */,
 				18C28C2426A268D000DCF34D /* AppDelegate.swift in Sources */,
 				18C28C4326A366C300DCF34D /* UsersTableViewCell.swift in Sources */,
+				18E6D57826A89B1D00B81FF0 /* PaginationUserViewDelegate.swift in Sources */,
 				18C28C2626A268D000DCF34D /* SceneDelegate.swift in Sources */,
 				18C28C3826A26C8E00DCF34D /* Model.swift in Sources */,
 				18C28C4126A293E800DCF34D /* UsersView.swift in Sources */,

@@ -8,7 +8,11 @@
 import Foundation
 
 struct ServiceManager {
-    let baseURl = URL(string: "https://reqres.in/api/users?page=1")
+
+    func getUsers(page: Int) -> URL {
+
+        return URL(string: "https://reqres.in/api/users?page=\(page)")!
+    }
 }
 
 // MARK: - Generic request
