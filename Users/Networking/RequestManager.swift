@@ -18,7 +18,8 @@ struct ServiceManager {
 // MARK: - Generic request
 extension ServiceManager {
 
-    func request<T: Decodable>(_ request: URLRequest, decodeType: T.Type,
+    func request<T: Decodable>(_ request: URLRequest,
+                               decodeType: T.Type,
                                completion: @escaping (Result<T?, ServiceError>) -> Void) {
 
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -32,34 +33,44 @@ extension ServiceManager {
                 return
             }
 
-            guard let data = data,
-                  let decodedData: T = try? JSONDecoder().decode(T.self, from: data) else {
-                completion(.failure(.errorToParseURL))
+            guard let data = data else {
+                completion(.failure(.dataIsNil))
                 return
             }
 
-            completion(.success(decodedData))
+            do {
+                let decodedData: T = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(decodedData))
+                return
+            } catch {
+                print(error)
+                completion(.failure(.errorOnDecode))
+                return
+            }
+
         }
         .resume()
     }
 
-}
 
+    // MARK: - Errors API call
+    enum ServiceError: Error {
+        case dataIsNil
+        case errorOnDecode
+        case notFound
+        case requestFailure(description: String)
 
-// MARK: - Errors API call
-enum ServiceError: Error {
-    case errorToParseURL
-    case notFound
-    case requestFailure(description: String)
-
-    var localizedDescription: String {
-        switch self {
-        case .errorToParseURL:
-            return "Error to parse URL"
-        case .notFound:
-            return "The Request returned status code 404, the route was not found."
-        case .requestFailure(let description):
-            return "Could not run request because: \(description)."
+        var localizedDescription: String {
+            switch self {
+            case .dataIsNil:
+                return "Data returned nil from request"
+            case .errorOnDecode:
+                return "Error decoding request result data"
+            case .notFound:
+                return "The Request returned status code 404, the route was not found."
+            case .requestFailure(let description):
+                return "Could not run request because: \(description)."
+            }
         }
     }
 }
